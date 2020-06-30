@@ -24,7 +24,7 @@ vue.$watch('fold_left', function () {
 
 // Définition des variables globales
 
-var MIN_DATE = '2015-01-01'
+var MIN_DATE = '2010-01-01' // lpz 2015->2010
 var MAX_DATE = '2019-12-31'
 
 var map = null;
@@ -775,5 +775,3 @@ function communeFilter() {
 function departementsFilter() {
 	map.setFilter('departements-layer', ['!=', ['get', 'code'], codeDepartement])
 }
-
-
