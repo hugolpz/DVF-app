@@ -26,7 +26,7 @@ th {
   max-width: 250px;
   height: 100%;
   padding: 1em;
-  background-color: #212D32;
+  background-color: #000000;
 }
 
 .scrollable {
@@ -108,7 +108,7 @@ h3 {
 .topnav {
   display: flex;
   justify-content: space-between;
-  background-color: #005DA3;
+  background-color: #d5a84f;
 }
 
 .topnav-left {
@@ -118,7 +118,7 @@ h3 {
 
 .topnav .title {
   display: flex;
-  background-color: #002C81;
+  background-color: #000;
   font-weight: bold;
   padding: 1em;
   min-width: 250px;
@@ -140,7 +140,7 @@ h3 {
   width: 3em;
   align-items: center;
   justify-content: center;
-  background-color: #005DA3;
+  background-color: #000;
 }
 
 .topnav .hamburger:hover {
