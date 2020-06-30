@@ -25,4 +25,4 @@ app.get('/', (req, res) => {
   res.sendFile(join(__dirname, 'static', 'index.html'))
 })
 
-app.listen(process.env.PORT || 3000)
+app.listen(process.env.PORT || 3001)

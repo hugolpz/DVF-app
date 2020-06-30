@@ -1,10 +1,10 @@
 # Explorer les données de DVF (Demandes de Valeur Foncière)
 
-La base de données DVF recense les mutations à titre onéreux (vente, vente en l'état futur d'achèvement, vente terrain à bâtir, échange, adjudication, expropriation) advenues les 5 dernières années. 
+La base de données DVF recense les mutations à titre onéreux (vente, vente en l'état futur d'achèvement, vente terrain à bâtir, échange, adjudication, expropriation) advenues les 5 dernières années.
 
 L'application https://app.dvf.etalab.gouv.fr prend appui sur ces données et propose de visualiser les transactions à la maille de la parcelle cadastrale. Elle a été développée par l'équipe de la [mission Etalab](http://www.etalab.gouv.fr/).
 
-Nous lirons volontiers vos suggestions d'amélioration. 
+Nous lirons volontiers vos suggestions d'amélioration.
 
 Les données de Mayotte ainsi que de l'Alsace et de la Moselle sont manquantes car gérées par le Livre Foncier et non par la DGFiP
 
@@ -30,7 +30,7 @@ Pour participer au développement de l'interface utilisateur, il n'est pas néce
 ```bash
 $ sudo apt-get update && sudo apt install nodejs
 $ nodejs -v
-v8.10.0 
+v8.10.0
 ```
 
 - [yarn](https://yarnpkg.com)
@@ -49,9 +49,11 @@ installation des dépendances Node.js
 $ yarn
 ```
 
-Démarrage du serveur Web (port 3000 par défaut)
+Démarrage du serveur Web (port 3001 par défaut)
 ```bash
 $ yarn start
+$ chromium-browser "http://localhost:3001" # open in chromium
+
 ```
 
 ### 4- Suite de l'installation : pour développer l'ensemble de l'application  (Full Stack: Back End + Front End)
