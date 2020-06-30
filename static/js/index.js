@@ -753,6 +753,7 @@ function mutationsFilter() {
 
 function parcellesFilter() {
 	var parcellesId = data_section.map(function (parcelle) {
+		console.log('Parcelle data:',parcelle) //lpz
 		return parcelle.id_parcelle
 	})
 	parcellesId.unshift('id')
