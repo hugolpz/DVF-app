@@ -1,3 +1,16 @@
+var minSurface = 825,
+	maxSurface = 845;
+
+/*
+function sortJSON(arr, key, way) {
+    return arr.sort(function(a, b) {
+        var x = a[key]; var y = b[key];
+        if (way === '123') { return ((x < y) ? -1 : ((x > y) ? 1 : 0)); }
+        if (way === '321') { return ((x > y) ? -1 : ((x < y) ? 1 : 0)); }
+    });
+} */
+
+
 function getRemoteJSON(url, throwIfNotFound) {
 	return fetch(url).then(function (response) {
 		if (response.ok) {
@@ -55,6 +68,7 @@ function getCadastreLayer(layerName, codeCommune) {
 		return Promise.all(communesToGet.map(function (communeToGet) {
 			return getRemoteJSON(`https://cadastre.data.gouv.fr/bundler/cadastre-etalab/communes/${communeToGet}/geojson/${layerName}`)
 		})).then(function (featureCollections) {
+			console.log("featureCollections",featureCollections)
 			return {
 				type: 'FeatureCollection',
 				features: featureCollections.reduce(function (acc, featureCollection) {
@@ -71,20 +85,41 @@ function getCadastreLayer(layerName, codeCommune) {
 
 function getParcelles(codeCommune, idSection) {
 	return getCadastreLayer('parcelles', codeCommune).then(function (featureCollection) {
+		var parcellesSorted = _.chain(featureCollection.features)
+		/* ******************************************************** */
+		/* ************************ BELOW ************************* */
+		/* ******************************************************** */
+
+			.filter(function (f) {
+				return f.id.startsWith(idSection)
+			})
+			.map(obj => {
+				let rObj = obj;
+				rObj.surface = obj.properties.contenance;
+				return rObj
+			 })
+			 .filter(function (f) {
+				return f.surface > minSurface && f.surface < maxSurface // LPZ
+			})
+			.sortBy('surface')
+			.value()
+		console.log("ParcellesSorted",parcellesSorted); // lpz
+		/* ******************************************************** */
+		/* *********************** ABOVE ************************** */
+		/* ******************************************************** */
 		return {
 			type: 'FeatureCollection',
-			features: _.chain(featureCollection.features)
-				.filter(function (f) {
-					return f.id.startsWith(idSection)
-				})
-				.sortBy('id')
-				.value()
+			features: parcellesSorted
 		}
 	})
 }
 
 function sortByLabel(features) {
-	return _.sortBy(features, function (f) { return f.properties.label })
+	return _.sortBy(features, function (f) {
+		// f = section
+		console.log("f.propertiesf",f.properties);// lpz
+		return f.properties.label 
+	})
 }
 
 function getSections(codeCommune) {
@@ -118,6 +153,7 @@ function sortByDateDesc(mutations) {
 
 function computeParcelle(mutationsSection, idParcelle) {
 	var mutationsParcelle = mutationsSection.filter(function (m) {
+		console.log("ComputeParcelle",m.id_parcelle,idParcelle)
 		return m.id_parcelle === idParcelle
 	})
 

@@ -3,7 +3,7 @@ Vue.component('boite-accordeon', {
 	props: ['couleur', 'mutation', 'icone', 'index'],
 	// La on donne le code source HTML du composant qui peut utiliser des données
 
-	template: `<div class="card mt-3">
+	template: `<div class="card mt-3" file="component.boite-accordeon.js" comment="Side-left-infobox">
 				<div class="card-body" v-on:click="selectionnerMutation()">
 					<div class="media d-flex">
 						<div class="align-self-center ml-1 mr-1">
@@ -39,6 +39,8 @@ Vue.component('boite-accordeon', {
 		</div>`,
 	methods: {
 		selectionnerMutation() {
+			console.log("component.boite:");
+			console.log("this",this, this.index, this.couleur, this.mutation);
 			entrerDansMutation(this.index);
 		}
 	}

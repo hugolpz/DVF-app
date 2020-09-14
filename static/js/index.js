@@ -24,12 +24,12 @@ vue.$watch('fold_left', function () {
 
 // Définition des variables globales
 
-var MIN_DATE = '2010-01-01' // lpz 2015->2010
+var MIN_DATE = '2014-01-01' // lpz 2015->2010
 var MAX_DATE = '2019-12-31'
 
 var map = null;
 var mapLoaded = false;
-var mapStyleChanged = false;
+var mapStyleChanged = true; // lpz from `false`
 var hoveredStateId = null;
 var selectedStateId = null;
 var codeDepartement = null;
@@ -201,7 +201,7 @@ function idSectionToCode(idSection) {
 	return idSection.substr(5, 5)
 }
 
-/* Set the width of the sidebar to 250px and the left margin of the page content to 250px */
+/* Set the width of the sidebar to 350px and the left margin of the page content to 350px */
 function openNav() {
 	document.getElementById("mySidebar").style.width = "350px";
 	document.getElementById("main").style.marginLeft = "350px";
@@ -382,7 +382,7 @@ function filledSectionsOptions(feature) {
 function filledParcelleOptions(feature) {
 	$('#parcelles').append($('<option />', {
 		value: feature.properties.id,
-		text: feature.properties.id
+		text: feature.properties.id+" "+feature.properties.contenance+"m²"
 	}))
 }
 
@@ -455,10 +455,29 @@ function entrerDansSection(newIdSection) {
 		// Charge la couche géographique
 		getParcelles(codeCommune, idSection).then(function (data) {
 			parcelles = data;
+			console.log('458. parcelles:', parcelles);// lpz
+			/* returns array such :
+			{ features:
+				[ { geometry : { [polygon] },
+						id: "402130000B0684",
+						"properties": {
+							"id": "402130000B0684",
+							"commune": "40213",
+							"prefixe": "000",
+							"section": "B",
+							"numero": "684",
+							"contenance": 950,
+							"arpente": true,
+							"created": "2017-04-04",
+							"updated": "2018-11-13"
+						},
+					...]
+				} */
 		}),
 		// Charge les mutations
 		getMutations(codeCommune, idSection, startDate, endDate).then(function (data) {
 			data_section = data
+			console.log('464. data_section:', data_section);// lpz
 		})
 	]).then(
 		// Une fois qu'on a la géographie et les mutations, on fait tout l'affichage
@@ -753,7 +772,7 @@ function mutationsFilter() {
 
 function parcellesFilter() {
 	var parcellesId = data_section.map(function (parcelle) {
-		console.log('Parcelle data:',parcelle) //lpz
+		console.log('775 Parcelle data:',parcelle) //lpz
 		return parcelle.id_parcelle
 	})
 	parcellesId.unshift('id')
