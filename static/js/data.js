@@ -85,11 +85,14 @@ function getCadastreLayer(layerName, codeCommune) {
 
 function getParcelles(codeCommune, idSection) {
 	return getCadastreLayer('parcelles', codeCommune).then(function (featureCollection) {
-		var parcellesSorted = _.chain(featureCollection.features)
 		/* ******************************************************** */
 		/* ************************ BELOW ************************* */
 		/* ******************************************************** */
 
+		minSurfaceInput = document.querySelector('#min-surface').value || minSurface;
+		maxSurfaceInput = document.querySelector('#max-surface').value || maxSurface;
+
+		var parcellesSorted = _.chain(featureCollection.features)
 			.filter(function (f) {
 				return f.id.startsWith(idSection)
 			})
@@ -99,7 +102,7 @@ function getParcelles(codeCommune, idSection) {
 				return rObj
 			 })
 			 .filter(function (f) {
-				return f.surface > minSurface && f.surface < maxSurface // LPZ
+				return f.surface > minSurfaceInput && f.surface < maxSurfaceInput // LPZ
 			})
 			.sortBy('surface')
 			.value()
