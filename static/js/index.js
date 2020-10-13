@@ -25,7 +25,7 @@ vue.$watch('fold_left', function () {
 // Définition des variables globales
 
 var MIN_DATE = '2014-01-01' // lpz 2015->2010
-var MAX_DATE = '2019-12-31'
+var MAX_DATE = '2020-06-30'
 
 var map = null;
 var mapLoaded = false;

@@ -3,7 +3,7 @@ Vue.component('boite-accordeon', {
 	props: ['couleur', 'mutation', 'icone', 'index'],
 	// La on donne le code source HTML du composant qui peut utiliser des données
 
-	template: `<div class="card mt-3" file="component.boite-accordeon.js" comment="Side-left-infobox">
+	template: `<div class="card mt-3">
 				<div class="card-body" v-on:click="selectionnerMutation()">
 					<div class="media d-flex">
 						<div class="align-self-center ml-1 mr-1">
@@ -31,16 +31,25 @@ Vue.component('boite-accordeon', {
 							icone="fa fa-tree"
 							:texte="terrain['nature_culture'] + (terrain['nature_culture_speciale'] != 'None' ? ' / ' + terrain['nature_culture_speciale'] : '')">
 						</boite>
-							<div v-if="mutation.parcellesLiees.length > 0" style = "padding:0.5rem">
-								Cette mutation contient des dispositions dans des parcelles adjacentes. La valeur foncière correspond au total.
-							</div>
+
+						<boite 
+							v-for="terrain in mutation.terrains"
+							:valeur="Math.round(mutation.infos[0]['valeur_fonciere'] / terrain['surface_terrain']) + ' €/m²'"
+							icone="fa fa-tree"
+							:texte="terrain['nature_culture'] + 
+								(terrain['nature_culture_speciale'] != 'None' 
+								&& terrain['nature_culture'] != 'sols' 
+								&& terrain['nature_culture_speciale'] != 'sols' ? ' / ' + terrain['nature_culture_speciale'] : 'no terrain here!')">
+						</boite>
+
+						<div v-if="mutation.parcellesLiees.length > 0" style = "padding:0.5rem">
+							Cette mutation contient des dispositions dans des parcelles adjacentes. La valeur foncière correspond au total.
+						</div>
 					</div>
 			</div>
 		</div>`,
 	methods: {
 		selectionnerMutation() {
-			console.log("component.boite:");
-			console.log("this",this, this.index, this.couleur, this.mutation);
 			entrerDansMutation(this.index);
 		}
 	}
